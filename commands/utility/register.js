@@ -1,7 +1,7 @@
-const { SlashCommandBuilder } = require('discord.js');
-import { database } from '../../database';
+import { SlashCommandBuilder } from "discord.js";
+import { database } from '../../database.js'
 
-module.exports = {
+export const RegisterGame = {
   data: new SlashCommandBuilder()
     .setName('register')
     .setDescription('Registers game for the server')
@@ -24,7 +24,7 @@ module.exports = {
     console.log(userGameList)
     await interaction.reply('Game Successfully Added!');
   },
-};
+}
 
 const addGameToUser = (user, game) => ({
   ...user,
