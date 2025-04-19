@@ -1,7 +1,7 @@
 import { REST, Routes } from 'discord.js';
-import { clientId, guildId, token } from './config.js';
-import { Ping } from './commands/utility/ping.js';
-import { RegisterGame } from './commands/utility/register.js';
+import { clientId, guildId, token } from '../config';
+import { Ping } from './commands/ping';
+import { RegisterGame } from './commands/registerGame';
 
 const commands = [Ping.data.toJSON(), RegisterGame.data.toJSON()]
 const rest = new REST().setToken(token);

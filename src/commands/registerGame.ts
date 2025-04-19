@@ -1,5 +1,5 @@
-import { SlashCommandBuilder } from "discord.js";
-import { database } from '../../database.js'
+import { CommandInteraction, SlashCommandBuilder } from "discord.js";
+import { database } from '../database'
 
 export const RegisterGame = {
   data: new SlashCommandBuilder()
@@ -10,9 +10,9 @@ export const RegisterGame = {
         .setDescription("The name of the game")
         .setRequired(true)
     }),
-  async execute(interaction) {
-    const game = interaction.options.getString('game')
-    const { id, username } = interaction.member.user
+  async execute(interaction: CommandInteraction) {
+    const game = interaction.options.get('game')
+    const { id, username } = interaction.member!!.user
     const currentUserData = database.getUser(id)
     const userData = currentUserData ? currentUserData : {
       id,
@@ -21,7 +21,6 @@ export const RegisterGame = {
     }
     const updatedUserData = addGameToUser(userData, game)
     database.saveUser(updatedUserData)
-    console.log(userGameList)
     await interaction.reply('Game Successfully Added!');
   },
 }

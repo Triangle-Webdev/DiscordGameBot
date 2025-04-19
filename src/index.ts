@@ -1,23 +1,22 @@
 import { Client, Collection, Events, GatewayIntentBits, MessageFlags } from 'discord.js';
-import { token } from './config.js';
-import { Ping } from './commands/utility/ping.js';
-import { RegisterGame } from './commands/utility/register.js';
+import { token } from '../config';
+import { Ping } from './commands/ping';
+import { RegisterGame } from './commands/registerGame';
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-client.commands = new Collection()
+const commands: Collection<unknown, any> = new Collection()
 
-client.commands.set(Ping.data.name, Ping);
-client.commands.set(RegisterGame.data.name, RegisterGame);
+commands.set(Ping.data.name, Ping);
+commands.set(RegisterGame.data.name, RegisterGame);
 
 client.on(Events.InteractionCreate, async interaction => {
   if (!interaction.isChatInputCommand()) return;
-  // console.log(interaction)
 
-  const command = interaction.client.commands.get(interaction.commandName);
+  const command = commands.get(interaction.commandName);
 
   if (!command) {
-    console.error("BOOM!!")
+    console.error("Command not found")
     return;
   }
 
